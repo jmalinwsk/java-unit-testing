@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class FileManager {
+
+    /** TODO połączyć z resztą programu */
     public static void test() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Test test = new Test(1, "number1");
