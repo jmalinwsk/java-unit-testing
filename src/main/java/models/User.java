@@ -1,8 +1,14 @@
-package Models;
+package models;
 
 public class User {
     private Long id;
     private String email;
+
+    public User() {}
+
+    public User(String email) {
+        this.email = email;
+    }
 
     public Long getId() {
         return id;

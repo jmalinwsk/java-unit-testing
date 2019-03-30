@@ -1,4 +1,4 @@
-package Models;
+package models;
 
 import org.joda.time.LocalTime;
 
@@ -7,6 +7,8 @@ public class Hotel {
     private String name;
     private LocalTime openHour;
     private LocalTime closeHour;
+
+    public Hotel() {}
 
     public Hotel(String name, LocalTime openHour, LocalTime closeHour) {
         this.name = name;

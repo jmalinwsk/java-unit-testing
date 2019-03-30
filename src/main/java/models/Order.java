@@ -1,9 +1,11 @@
-package Models;
+package models;
 
 public class Order {
     private Long id;
     private User user;
     private Reservation reservation;
+
+    public Order() {}
 
     public Order(User user, Reservation reservation) {
         this.user = user;

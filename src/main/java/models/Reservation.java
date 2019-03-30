@@ -1,4 +1,4 @@
-package Models;
+package models;
 
 import org.joda.time.LocalTime;
 
@@ -8,6 +8,8 @@ public class Reservation {
     private LocalTime endTime;
     private Boolean ifFree = false;
     private Room room;
+
+    public Reservation() {}
 
     public Reservation(LocalTime startTime, LocalTime endTime, Room room) {
         this.startTime = startTime;

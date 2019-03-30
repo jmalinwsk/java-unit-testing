@@ -1,8 +1,10 @@
-package Models;
+package models;
 
 public class Room {
     private Long id;
     private Long number;
+
+    public Room() {}
 
     public Room(Long number) {
         this.number = number;
