@@ -1,19 +1,27 @@
 package models;
 
+import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalTime;
+
+import java.time.DayOfWeek;
 
 public class Reservation {
     private Integer id;
     private LocalTime startTime;
     private LocalTime endTime;
+    private DayOfWeek startDate;
+    private DayOfWeek endDate;
     private Boolean ifFree = false;
     private Room room;
 
     public Reservation() {}
 
-    public Reservation(LocalTime startTime, LocalTime endTime, Room room) {
+    public Reservation(Integer id, DayOfWeek startDate, LocalTime startTime, DayOfWeek endDate, LocalTime endTime, Room room) {
+        this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.room = room;
     }
 
@@ -39,6 +47,22 @@ public class Reservation {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
+    }
+
+    public DayOfWeek getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(DayOfWeek startDate) {
+        this.startDate = startDate;
+    }
+
+    public DayOfWeek getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(DayOfWeek endDate) {
+        this.endDate = endDate;
     }
 
     public Boolean getIfFree() {

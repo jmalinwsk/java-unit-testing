@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class UserService {
 
     public HashMap<Integer, Order> getOrdersOfUser(String databaseName, User user) throws IOException {
-        if (user != null) {
+        if (user != null && databaseName != null) {
             Database database = Database.deserializeDatabase(databaseName);
             HashMap<Integer, Order> orders = new HashMap<>();
             Integer id = 1;

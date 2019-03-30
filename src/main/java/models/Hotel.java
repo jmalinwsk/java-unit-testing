@@ -10,7 +10,8 @@ public class Hotel {
 
     public Hotel() {}
 
-    public Hotel(String name, LocalTime openHour, LocalTime closeHour) {
+    public Hotel(Integer id, String name, LocalTime openHour, LocalTime closeHour) {
+        this.id = id;
         this.name = name;
         this.openHour = openHour;
         this.closeHour = closeHour;

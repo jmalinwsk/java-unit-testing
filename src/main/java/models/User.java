@@ -6,7 +6,8 @@ public class User {
 
     public User() {}
 
-    public User(String email) {
+    public User(Integer id, String email) {
+        this.id = id;
         this.email = email;
     }
 

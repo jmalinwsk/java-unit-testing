@@ -7,7 +7,8 @@ public class Order {
 
     public Order() {}
 
-    public Order(User user, Reservation reservation) {
+    public Order(Integer id, User user, Reservation reservation) {
+        this.id = id;
         this.user = user;
         this.reservation = reservation;
     }
