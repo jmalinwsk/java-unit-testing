@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 import static database.Database.deserializeDatabase;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DatabaseTest {
     private Database database;
@@ -59,13 +60,27 @@ public class DatabaseTest {
         counter++;
     }
 
+    @Test
+    @DisplayName("incorrect deserialization - wrong filename")
+    public void deserializeDatabase2Test() {
+        assertThrows(IOException.class,
+                () -> database = deserializeDatabase("wrongFilename"));
+    }
+
+    @Test
+    @DisplayName("incorrect deserialization - empty argument of method")
+    public void deserializeDatabase3Test() {
+        assertThrows(IOException.class,
+                () -> database = deserializeDatabase(null));
+    }
+
     @AfterEach
     public void tearDown() {
         database = null;
     }
 
     @AfterAll
-    public static void cleanup() throws IOException {
+    public static void cleanUp() throws IOException {
         for(int i=0; i<counter; i++)
             Files.delete(Paths.get("target/" + databaseFilename + i + ".json"));
     }

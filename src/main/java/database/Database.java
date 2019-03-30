@@ -57,6 +57,7 @@ public class Database {
         objectMapper.registerModule(new JodaModule());
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         objectMapper.writeValue(new File("target/" + filename + ".json"), this);
+
         return 0;
     }
 
