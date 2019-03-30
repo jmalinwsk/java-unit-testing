@@ -3,6 +3,7 @@ package database;
 import com.fasterxml.jackson.annotation.JacksonAnnotation;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import models.*;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -51,18 +52,20 @@ public class Database {
     }
 
     /** saving database to the file */
-    public int serializeDatabase() throws IOException, JsonGenerationException, JsonMappingException {
+    public int serializeDatabase(String filename) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JodaModule());
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        objectMapper.writeValue(new File("target/database.json"), this);
+        objectMapper.writeValue(new File("target/" + filename + ".json"), this);
         return 0;
     }
 
     /** loading database from file */
-    public static Database deserializeDatabase() throws IOException, JsonParseException, JsonMappingException {
+    public static Database deserializeDatabase(String filename) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JodaModule());
 
-        return objectMapper.readValue(new File("target/database.json"), Database.class);
+        return objectMapper.readValue(new File("target/" + filename + ".json"), Database.class);
     }
 
     public HashMap<Long, Hotel> getHotels() {
