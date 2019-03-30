@@ -18,37 +18,18 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class Database {
-    private HashMap<Long, Hotel> hotels;
-    private HashMap<Long, Order> orders;
-    private HashMap<Long, Reservation> reservations;
-    private HashMap<Long, Room> rooms;
-    private HashMap<Long, User> users;
-
-    private Long nextHotelId = 0L;
-    private Long nextOrderId = 0L;
-    private Long nextReservationsId = 0L;
-    private Long nextRoomId = 0L;
-    private Long nextUserId = 0L;
+    private HashMap<Integer, Hotel> hotels;
+    private HashMap<Integer, Order> orders;
+    private HashMap<Integer, Reservation> reservations;
+    private HashMap<Integer, Room> rooms;
+    private HashMap<Integer, User> users;
 
     public Database() {
-        hotels = new HashMap<Long, Hotel>();
-        orders = new HashMap<Long, Order>();
-        reservations = new HashMap<Long, Reservation>();
-        rooms = new HashMap<Long, Room>();
-        users = new HashMap<Long, User>();
-    }
-
-    public Database(
-            HashMap<Long, Hotel> hotels,
-            HashMap<Long, Order> orders,
-            HashMap<Long, Reservation> reservations,
-            HashMap<Long, Room> rooms,
-            HashMap<Long, User> users) {
-        this.hotels = hotels;
-        this.orders = orders;
-        this.reservations = reservations;
-        this.rooms = rooms;
-        this.users = users;
+        hotels = new HashMap<>();
+        orders = new HashMap<>();
+        reservations = new HashMap<>();
+        rooms = new HashMap<>();
+        users = new HashMap<>();
     }
 
     /** saving database to the file */
@@ -69,83 +50,43 @@ public class Database {
         return objectMapper.readValue(new File("target/" + filename + ".json"), Database.class);
     }
 
-    public HashMap<Long, Hotel> getHotels() {
+    public HashMap<Integer, Hotel> getHotels() {
         return hotels;
     }
 
-    public void setHotels(HashMap<Long, Hotel> hotels) {
+    public void setHotels(HashMap<Integer, Hotel> hotels) {
         this.hotels = hotels;
     }
 
-    public HashMap<Long, Order> getOrders() {
+    public HashMap<Integer, Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(HashMap<Long, Order> orders) {
+    public void setOrders(HashMap<Integer, Order> orders) {
         this.orders = orders;
     }
 
-    public HashMap<Long, Reservation> getReservations() {
+    public HashMap<Integer, Reservation> getReservations() {
         return reservations;
     }
 
-    public void setReservations(HashMap<Long, Reservation> reservations) {
+    public void setReservations(HashMap<Integer, Reservation> reservations) {
         this.reservations = reservations;
     }
 
-    public HashMap<Long, Room> getRooms() {
+    public HashMap<Integer, Room> getRooms() {
         return rooms;
     }
 
-    public void setRooms(HashMap<Long, Room> rooms) {
+    public void setRooms(HashMap<Integer, Room> rooms) {
         this.rooms = rooms;
     }
 
-    public HashMap<Long, User> getUsers() {
+    public HashMap<Integer, User> getUsers() {
         return users;
     }
 
-    public void setUsers(HashMap<Long, User> users) {
+    public void setUsers(HashMap<Integer, User> users) {
         this.users = users;
-    }
-
-    public void setNextHotelId(Long nextHotelId) {
-        this.nextHotelId = nextHotelId;
-    }
-
-    public void setNextOrderId(Long nextOrderId) {
-        this.nextOrderId = nextOrderId;
-    }
-
-    public void setNextReservationsId(Long nextReservationsId) {
-        this.nextReservationsId = nextReservationsId;
-    }
-
-    public void setNextRoomId(Long nextRoomId) {
-        this.nextRoomId = nextRoomId;
-    }
-
-    public void setNextUserId(Long nextUserId) {
-        this.nextUserId = nextUserId;
-    }
-
-    public Long getNextHotelId() {
-        return ++nextHotelId;
-    }
-
-    public Long getNextOrderId() {
-        return ++nextOrderId;
-    }
-
-    public Long getNextReservationsId() {
-        return ++nextReservationsId;
-    }
-
-    public Long getNextRoomId() {
-        return ++nextRoomId;
-    }
-
-    public Long getNextUserId() {
-        return ++nextUserId;
     }
 }

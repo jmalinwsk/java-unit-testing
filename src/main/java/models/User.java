@@ -1,7 +1,7 @@
 package models;
 
 public class User {
-    private Long id;
+    private Integer id;
     private String email;
 
     public User() {}
@@ -10,11 +10,11 @@ public class User {
         this.email = email;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

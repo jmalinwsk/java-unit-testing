@@ -34,8 +34,8 @@ public class DatabaseTest {
     @Test
     @DisplayName("correct serialization")
     public void serializeDatabase2Test() throws IOException {
-        HashMap<Long, Hotel> hotels = new HashMap<>();
-        hotels.put(1L, new Hotel("Sample Hotel", new LocalTime(10L), new LocalTime(23L)));
+        HashMap<Integer, Hotel> hotels = new HashMap<>();
+        hotels.put(1, new Hotel("Sample Hotel", new LocalTime(10), new LocalTime(23)));
         database.setHotels(hotels);
 
         assertEquals(0, database.serializeDatabase(databaseFilename + counter));
@@ -46,17 +46,17 @@ public class DatabaseTest {
     @DisplayName("correct deserialization")
     public void deserializeDatabaseTest() throws IOException {
         File file = new File("target/" + databaseFilename + counter + ".json");
-        HashMap<Long, Hotel> hotels = new HashMap<>();
-        hotels.put(1L, new Hotel("Sample Hotel", new LocalTime(10L), new LocalTime(23L)));
+        HashMap<Integer, Hotel> hotels = new HashMap<>();
+        hotels.put(1, new Hotel("Sample Hotel", new LocalTime(10L), new LocalTime(23L)));
         database.setHotels(hotels);
         database.serializeDatabase(databaseFilename + counter);
         Database newDatabase = deserializeDatabase(databaseFilename + counter);
 
-        HashMap<Long, Hotel> newHotels = newDatabase.getHotels();
+        HashMap<Integer, Hotel> newHotels = newDatabase.getHotels();
 
-        assertEquals(hotels.get(1L).getName(), newHotels.get(1L).getName());
-        assertEquals(hotels.get(1L).getOpenHour(), newHotels.get(1L).getOpenHour());
-        assertEquals(hotels.get(1L).getCloseHour(), newHotels.get(1L).getCloseHour());
+        assertEquals(hotels.get(1).getName(), newHotels.get(1).getName());
+        assertEquals(hotels.get(1).getOpenHour(), newHotels.get(1).getOpenHour());
+        assertEquals(hotels.get(1).getCloseHour(), newHotels.get(1).getCloseHour());
         counter++;
     }
 

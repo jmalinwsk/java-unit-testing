@@ -1,28 +1,28 @@
 package models;
 
 public class Room {
-    private Long id;
-    private Long number;
+    private Integer id;
+    private Integer number;
 
     public Room() {}
 
-    public Room(Long number) {
+    public Room(Integer number) {
         this.number = number;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(Long number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 }

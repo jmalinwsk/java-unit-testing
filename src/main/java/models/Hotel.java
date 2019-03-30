@@ -3,7 +3,7 @@ package models;
 import org.joda.time.LocalTime;
 
 public class Hotel {
-    private Long id;
+    private Integer id;
     private String name;
     private LocalTime openHour;
     private LocalTime closeHour;
@@ -16,11 +16,11 @@ public class Hotel {
         this.closeHour = closeHour;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
