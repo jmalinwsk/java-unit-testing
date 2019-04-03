@@ -24,31 +24,11 @@ public class Database {
     private HashMap<Integer, Room> rooms;
     private HashMap<Integer, User> users;
 
-    public Database() {
-        hotels = new HashMap<>();
-        orders = new HashMap<>();
-        reservations = new HashMap<>();
-        rooms = new HashMap<>();
-        users = new HashMap<>();
-    }
-
-    /** saving database to the file */
-    public int serializeDatabase(String filename) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JodaModule());
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        objectMapper.writeValue(new File("target/" + filename + ".json"), this);
-
-        return 0;
-    }
-
-    /** loading database from file */
-    public static Database deserializeDatabase(String filename) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JodaModule());
-
-        return objectMapper.readValue(new File("target/" + filename + ".json"), Database.class);
-    }
+    private Integer nextHotelId = 0;
+    private Integer nextOrderId = 0;
+    private Integer nextReservationId = 0;
+    private Integer nextRoomId = 0;
+    private Integer nextUserId = 0;
 
     public HashMap<Integer, Hotel> getHotels() {
         return hotels;
@@ -88,5 +68,56 @@ public class Database {
 
     public void setUsers(HashMap<Integer, User> users) {
         this.users = users;
+    }
+
+    public Integer getNextHotelId() {
+        nextHotelId++;
+        return nextHotelId;
+    }
+
+    public Integer getNextOrderId() {
+        nextOrderId++;
+        return nextOrderId;
+    }
+
+    public Integer getNextReservationId() {
+        nextReservationId++;
+        return nextReservationId;
+    }
+
+    public Integer getNextRoomId() {
+        nextRoomId++;
+        return nextRoomId;
+    }
+
+    public Integer getNextUserId() {
+        nextUserId++;
+        return nextUserId;
+    }
+
+    public Database() {
+        hotels = new HashMap<>();
+        orders = new HashMap<>();
+        reservations = new HashMap<>();
+        rooms = new HashMap<>();
+        users = new HashMap<>();
+    }
+
+    /** saving database to the file */
+    public int serializeDatabase(String filename) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JodaModule());
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        objectMapper.writeValue(new File("target/" + filename + ".json"), this);
+
+        return 0;
+    }
+
+    /** loading database from file */
+    public static Database deserializeDatabase(String filename) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JodaModule());
+
+        return objectMapper.readValue(new File("target/" + filename + ".json"), Database.class);
     }
 }

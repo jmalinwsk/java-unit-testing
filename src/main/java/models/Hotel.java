@@ -1,6 +1,9 @@
 package models;
 
+import database.Database;
 import org.joda.time.LocalTime;
+
+import java.io.IOException;
 
 public class Hotel {
     private Integer id;
@@ -10,8 +13,7 @@ public class Hotel {
 
     public Hotel() {}
 
-    public Hotel(Integer id, String name, LocalTime openHour, LocalTime closeHour) {
-        this.id = id;
+    public Hotel(String name, LocalTime openHour, LocalTime closeHour) {
         this.name = name;
         this.openHour = openHour;
         this.closeHour = closeHour;
@@ -47,5 +49,12 @@ public class Hotel {
 
     public void setCloseHour(LocalTime closeHour) {
         this.closeHour = closeHour;
+    }
+
+    public void addHotelToDatabase(Database database, Hotel hotel) {
+        Integer id = database.getNextHotelId();
+        hotel.setId(id);
+
+        database.getHotels().put(id, hotel);
     }
 }

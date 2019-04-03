@@ -1,5 +1,9 @@
 package models;
 
+import database.Database;
+
+import java.io.IOException;
+
 public class Order {
     private Integer id;
     private User user;
@@ -7,8 +11,7 @@ public class Order {
 
     public Order() {}
 
-    public Order(Integer id, User user, Reservation reservation) {
-        this.id = id;
+    public Order(User user, Reservation reservation) {
         this.user = user;
         this.reservation = reservation;
     }
@@ -35,5 +38,12 @@ public class Order {
 
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
+    }
+
+    public void addOrderToDatabase(Database database, Order order) {
+        Integer id = database.getNextOrderId();
+        order.setId(id);
+
+        database.getOrders().put(id, order);
     }
 }

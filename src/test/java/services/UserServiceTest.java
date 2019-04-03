@@ -2,54 +2,60 @@ package services;
 
 import database.Database;
 import models.*;
+import models.Order;
 import org.joda.time.LocalTime;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.DayOfWeek;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest {
-    private UserService userService;
-    private Database database;
+    private static UserService userService;
+    private static Database database;
+    private static User user, user2;
+    private static Hotel hotel;
+    private static Room room;
+    private static Reservation reservation, reservation2, reservation3;
+    private static Order order, order2, order3;
+    private static HashMap<Integer, Order> orders;
+    private static HashMap<Integer, Order> ordersOfUser;
 
     private static int counter = 0;
     private static String databaseFilename = "UserService";
 
-    @BeforeEach
-    public void setUp() {
+    @BeforeAll
+    public static void setup() throws IOException {
         userService = new UserService();
         database = new Database();
-    }
+        user = new User(1, "test@test.pl");
+        user2 = new User(2, "test2@test2.pl");
 
-    @Test
-    public void getOrdersOfUserTest() throws IOException {
-        User user = new User(1, "test@test.pl");
-        User user2 = new User(2, "test2@test2.pl");
-        Hotel hotel = new Hotel(1, "Sample Hotel", new LocalTime(8), new LocalTime(22));
-        Room room = new Room(1, hotel, 516);
-        Reservation reservation = new Reservation(1, DayOfWeek.MONDAY, new LocalTime(11), DayOfWeek.TUESDAY, new LocalTime(11), room);
-        Reservation reservation2 = new Reservation(2, DayOfWeek.TUESDAY, new LocalTime(11), DayOfWeek.WEDNESDAY, new LocalTime(11), room);
-        Reservation reservation3 = new Reservation(3, DayOfWeek.WEDNESDAY, new LocalTime(11), DayOfWeek.THURSDAY, new LocalTime(11), room);
-        Order order1 = new Order(1, user, reservation);
-        Order order2 = new Order(2, user, reservation2);
-        Order order3 = new Order(3, user2, reservation3);
-        HashMap<Integer, Order> orders = new HashMap<>();
-        orders.put(1, order1);
+        hotel = new Hotel(1, "Sample Hotel", new LocalTime(8), new LocalTime(22));
+        room = new Room(1, hotel, 516);
+        reservation = new Reservation(1, DayOfWeek.MONDAY, new LocalTime(11), DayOfWeek.TUESDAY, new LocalTime(11), room);
+        reservation2 = new Reservation(2, DayOfWeek.TUESDAY, new LocalTime(11), DayOfWeek.WEDNESDAY, new LocalTime(11), room);
+        reservation3 = new Reservation(3, DayOfWeek.WEDNESDAY, new LocalTime(11), DayOfWeek.THURSDAY, new LocalTime(11), room);
+        order = new Order(1, user, reservation);
+        order2 = new Order(2, user, reservation2);
+        order3 = new Order(3, user2, reservation3);
+        orders = new HashMap<>();
+        orders.put(1, order);
         orders.put(2, order2);
         orders.put(3, order3);
         database.setOrders(orders);
         database.serializeDatabase(databaseFilename + counter);
+    }
 
-        HashMap<Integer, Order> ordersOfUser = userService.getOrdersOfUser(databaseFilename + counter, user2);
+    @Test
+    @DisplayName("getting orders of user")
+    public void getOrdersOfUserTest() throws IOException {
+        ordersOfUser = userService.getOrdersOfUser(databaseFilename + counter, user2);
 
         assertAll(
                 () -> assertEquals(user2.getId(), ordersOfUser.get(1).getUser().getId()),
@@ -65,17 +71,50 @@ public class UserServiceTest {
                 () -> assertEquals(reservation3.getRoom().getHotel().getOpenHour(), ordersOfUser.get(1).getReservation().getRoom().getHotel().getOpenHour()),
                 () -> assertEquals(reservation3.getRoom().getHotel().getCloseHour(), ordersOfUser.get(1).getReservation().getRoom().getHotel().getCloseHour())
                 );
+    }
 
-        counter++;
+    @Test
+    @DisplayName("getting orders of user - database name is null")
+    public void getOrdersOfUser2Test() {
+        assertThrows(NullPointerException.class,
+                () -> ordersOfUser = userService.getOrdersOfUser(null, user2));
+    }
+
+    @Test
+    @DisplayName("getting orders of user - database name is wrong")
+    public void getOrdersOfUser3Test() {
+        assertThrows(NullPointerException.class,
+                () -> ordersOfUser = userService.getOrdersOfUser("wrong database name", user2));
+    }
+
+    @Test
+    @DisplayName("getting orders of user - user is null")
+    public void getOrdersOfUser4Test() {
+        assertThrows(NullPointerException.class,
+                () -> ordersOfUser = userService.getOrdersOfUser(databaseFilename + counter, null));
+    }
+
+    @Test
+    @DisplayName("getting orders of user - user doesn't exist in database")
+    public void getOrdersOfUser5Test() {
+        assertThrows(NullPointerException.class,
+                () -> ordersOfUser = userService.getOrdersOfUser(databaseFilename + counter, new User(3, "ee@ee.pl")));
+    }
+
+    @Test
+    @DisplayName("getting orders of user - user and database name are null")
+    public void getOrdersOfUser6Test() {
+        assertThrows(NullPointerException.class,
+                () -> ordersOfUser = userService.getOrdersOfUser(null, null));
     }
 
     @AfterEach
-    public void tearTown() {
+    public void finalize() {
         userService = null;
     }
 
     @AfterAll
-    public static void cleanUp() throws IOException {
+    public static void teardown() throws IOException {
         for(int i=0; i<counter; i++)
             Files.delete(Paths.get("target/" + databaseFilename + i + ".json"));
     }

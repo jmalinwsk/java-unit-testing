@@ -1,13 +1,14 @@
 package models;
 
+import database.Database;
+
 public class User {
     private Integer id;
     private String email;
 
     public User() {}
 
-    public User(Integer id, String email) {
-        this.id = id;
+    public User(String email) {
         this.email = email;
     }
 
@@ -25,5 +26,12 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void addUserToDatabase(Database database, User user) {
+        Integer id = database.getNextUserId();
+        user.setId(id);
+
+        database.getUsers().put(id, user);
     }
 }

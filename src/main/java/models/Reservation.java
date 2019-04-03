@@ -1,5 +1,6 @@
 package models;
 
+import database.Database;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalTime;
 
@@ -16,8 +17,7 @@ public class Reservation {
 
     public Reservation() {}
 
-    public Reservation(Integer id, DayOfWeek startDate, LocalTime startTime, DayOfWeek endDate, LocalTime endTime, Room room) {
-        this.id = id;
+    public Reservation(DayOfWeek startDate, LocalTime startTime, DayOfWeek endDate, LocalTime endTime, Room room) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.startDate = startDate;
@@ -79,5 +79,12 @@ public class Reservation {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public void addReservationToDatabase(Database database, Reservation reservation) {
+        Integer id = database.getNextReservationId();
+        reservation.setId(id);
+
+        database.getReservations().put(id, reservation);
     }
 }

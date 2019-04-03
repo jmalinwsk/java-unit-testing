@@ -1,5 +1,7 @@
 package models;
 
+import database.Database;
+
 public class Room {
     private Integer id;
     private Integer number;
@@ -7,8 +9,7 @@ public class Room {
 
     public Room() {}
 
-    public Room(Integer id, Hotel hotel, Integer number) {
-        this.id = id;
+    public Room(Hotel hotel, Integer number) {
         this.hotel = hotel;
         this.number = number;
     }
@@ -35,5 +36,12 @@ public class Room {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public void addRoomToDatabase(Database database, Room room) {
+        Integer id = database.getNextRoomId();
+        room.setId(id);
+
+        database.getRooms().put(id, room);
     }
 }
