@@ -1,9 +1,6 @@
 package models;
 
-import database.Database;
 import org.joda.time.LocalTime;
-
-import java.io.IOException;
 
 public class Hotel {
     private Integer id;

@@ -19,13 +19,11 @@ import java.util.HashMap;
 
 public class Database {
     private HashMap<Integer, Hotel> hotels;
-    private HashMap<Integer, Order> orders;
     private HashMap<Integer, Reservation> reservations;
     private HashMap<Integer, Room> rooms;
     private HashMap<Integer, User> users;
 
     private Integer nextHotelId = 0;
-    private Integer nextOrderId = 0;
     private Integer nextReservationId = 0;
     private Integer nextRoomId = 0;
     private Integer nextUserId = 0;
@@ -36,14 +34,6 @@ public class Database {
 
     public void setHotels(HashMap<Integer, Hotel> hotels) {
         this.hotels = hotels;
-    }
-
-    public HashMap<Integer, Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(HashMap<Integer, Order> orders) {
-        this.orders = orders;
     }
 
     public HashMap<Integer, Reservation> getReservations() {
@@ -75,11 +65,6 @@ public class Database {
         return nextHotelId;
     }
 
-    public Integer getNextOrderId() {
-        nextOrderId++;
-        return nextOrderId;
-    }
-
     public Integer getNextReservationId() {
         nextReservationId++;
         return nextReservationId;
@@ -97,7 +82,6 @@ public class Database {
 
     public Database() {
         hotels = new HashMap<>();
-        orders = new HashMap<>();
         reservations = new HashMap<>();
         rooms = new HashMap<>();
         users = new HashMap<>();

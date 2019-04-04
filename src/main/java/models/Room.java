@@ -1,17 +1,17 @@
 package models;
 
-import database.Database;
-
 public class Room {
     private Integer id;
-    private Integer number;
+    private Integer numberOfRoom;
     private Hotel hotel;
+    private Integer amountOfPeople;
 
     public Room() {}
 
-    public Room(Hotel hotel, Integer number) {
+    public Room(Hotel hotel, Integer numberOfRoom, Integer amountOfPeople) {
         this.hotel = hotel;
-        this.number = number;
+        this.numberOfRoom = numberOfRoom;
+        this.amountOfPeople = amountOfPeople;
     }
 
     public Integer getId() {
@@ -22,12 +22,20 @@ public class Room {
         this.id = id;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getNumberOfRoom() {
+        return numberOfRoom;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setNumberOfRoom(Integer numberOfRoom) {
+        this.numberOfRoom = numberOfRoom;
+    }
+
+    public Integer getAmountOfPeople() {
+        return amountOfPeople;
+    }
+
+    public void setAmountOfPeople(Integer amountOfPeople) {
+        this.amountOfPeople = amountOfPeople;
     }
 
     public Hotel getHotel() {
@@ -36,12 +44,5 @@ public class Room {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
-    }
-
-    public void addRoomToDatabase(Database database, Room room) {
-        Integer id = database.getNextRoomId();
-        room.setId(id);
-
-        database.getRooms().put(id, room);
     }
 }

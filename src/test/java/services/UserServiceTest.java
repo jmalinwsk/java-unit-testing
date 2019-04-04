@@ -1,20 +1,5 @@
 package services;
 
-import database.Database;
-import models.*;
-import models.Order;
-import org.joda.time.LocalTime;
-import org.junit.jupiter.api.*;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.DayOfWeek;
-import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 public class UserServiceTest {
     /*
     private static UserService userService;

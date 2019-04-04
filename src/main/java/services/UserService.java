@@ -1,15 +1,8 @@
 package services;
 
-import database.Database;
-import models.Order;
-import models.User;
-
-import java.io.IOException;
-import java.util.HashMap;
-
 public class UserService {
 
-    public HashMap<Integer, Order> getOrdersOfUser(String databaseName, User user) throws IOException {
+    /*public HashMap<Integer, Order> getOrdersOfUser(String databaseName, User user) throws IOException {
         if (user != null && databaseName != null) {
             Database database = Database.deserializeDatabase(databaseName);
             HashMap<Integer, Order> orders = new HashMap<>();
@@ -23,6 +16,6 @@ public class UserService {
             }
             return orders;
         } else throw new IllegalArgumentException();
-    }
+    }*/
 
 }
