@@ -50,11 +50,4 @@ public class Hotel {
     public void setCloseHour(LocalTime closeHour) {
         this.closeHour = closeHour;
     }
-
-    public void addHotelToDatabase(Database database, Hotel hotel) {
-        Integer id = database.getNextHotelId();
-        hotel.setId(id);
-
-        database.getHotels().put(id, hotel);
-    }
 }

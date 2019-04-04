@@ -8,7 +8,7 @@ import java.time.DateTimeException;
 
 public class HotelService {
 
-    /** validation of hotel
+    /** Validation of hotel.
      * @param hotel variable with hotel
      * @return true if validation is valid
      * @throws DateTimeException when open hour is after close hour
@@ -27,20 +27,19 @@ public class HotelService {
      * @param database variable of database
      * @param hotel variable with new hotel
      * @throws IOException when database is null
-     * @throws NullPointerException when hotel is null
      * @throws IllegalArgumentException when validation of hotel is wrong
      */
-    public void addHotelToDatabase(Database database, Hotel hotel) throws IOException {
+    public void addHotelToDatabase(Database database, Hotel hotel) throws IOException{
         if (hotelValidation(hotel)) {
             if (database != null) {
-                Integer id = null;
-                for (Hotel h : database.getHotels().values())
-                    id = h.getId();
+                Integer id = database.getNextHotelId();
+                hotel.setId(id);
 
-                database.getHotels().put(id + 1, hotel);
+                database.getHotels().put(id, hotel);
             }
             else throw new IOException();
         }
         else throw new IllegalArgumentException();
     }
+
 }

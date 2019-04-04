@@ -40,10 +40,4 @@ public class Order {
         this.reservation = reservation;
     }
 
-    public void addOrderToDatabase(Database database, Order order) {
-        Integer id = database.getNextOrderId();
-        order.setId(id);
-
-        database.getOrders().put(id, order);
-    }
 }
