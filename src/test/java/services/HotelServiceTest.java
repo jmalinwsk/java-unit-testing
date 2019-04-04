@@ -5,10 +5,11 @@ import models.Hotel;
 import org.joda.time.LocalTime;
 import org.junit.jupiter.api.*;
 
+import java.io.IOException;
 import java.time.DateTimeException;
+import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HotelServiceTest {
     private Database database;
@@ -83,6 +84,50 @@ public class HotelServiceTest {
                 () -> hotelService.hotelValidation(hotel));
     }
 
+    @Test
+    @DisplayName("adding hotel to database (valid)")
+    public void addHotelToDatabaseTest() throws IOException {
+        assertEquals(new HashMap<Integer, Hotel>(), database.getHotels());
+
+        hotelService.addHotelToDatabase(database, hotel);
+
+        HashMap<Integer, Hotel> hotelsTemp = new HashMap<>();
+        hotelsTemp.put(1, hotel);
+        assertEquals(hotelsTemp, database.getHotels());
+    }
+
+    @Test
+    @DisplayName("adding hotel to database " +
+            "(throws IOException when database is null)")
+    public void addHotelToDatabase2Test() {
+        assertThrows(NullPointerException.class,
+                () -> hotelService.addHotelToDatabase(null, hotel));
+    }
+
+    @Test
+    @DisplayName("adding hotel to database " +
+            "(throws NullPointerException when hotel is null)")
+    public void addHotelToDatabase3Test() {
+        assertThrows(NullPointerException.class,
+                () -> hotelService.addHotelToDatabase(database, null));
+    }
+
+    @Test
+    @DisplayName("adding hotel to database " +
+            "(throws NullPointerException when database and hotel is null)")
+    public void addHotelToDatabase4Test() {
+        assertThrows(NullPointerException.class,
+                () -> hotelService.addHotelToDatabase(null, null));
+    }
+
+    @Test
+    @DisplayName("adding hotel to database " +
+            "(throws IllegalArgumentException when hotel doesn't pass validation)")
+    public void addHotelToDatabase6Test() {
+        assertThrows(NullPointerException.class,
+                () -> hotelService.addHotelToDatabase(database,
+                        new Hotel(null, new LocalTime(8), new LocalTime(20))));
+    }
 
     @AfterEach
     public void cleanup() {
