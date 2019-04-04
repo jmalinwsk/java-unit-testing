@@ -16,6 +16,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest {
+    /*
     private static UserService userService;
     private static Database database;
     private static User user, user2;
@@ -33,17 +34,17 @@ public class UserServiceTest {
     public static void setup() throws IOException {
         userService = new UserService();
         database = new Database();
-        user = new User(1, "test@test.pl");
-        user2 = new User(2, "test2@test2.pl");
+        user = new User("test@test.pl");
+        user2 = new User("test2@test2.pl");
 
-        hotel = new Hotel(1, "Sample Hotel", new LocalTime(8), new LocalTime(22));
-        room = new Room(1, hotel, 516);
-        reservation = new Reservation(1, DayOfWeek.MONDAY, new LocalTime(11), DayOfWeek.TUESDAY, new LocalTime(11), room);
-        reservation2 = new Reservation(2, DayOfWeek.TUESDAY, new LocalTime(11), DayOfWeek.WEDNESDAY, new LocalTime(11), room);
-        reservation3 = new Reservation(3, DayOfWeek.WEDNESDAY, new LocalTime(11), DayOfWeek.THURSDAY, new LocalTime(11), room);
-        order = new Order(1, user, reservation);
-        order2 = new Order(2, user, reservation2);
-        order3 = new Order(3, user2, reservation3);
+        hotel = new Hotel("Sample Hotel", new LocalTime(8), new LocalTime(22));
+        room = new Room(hotel, 516);
+        reservation = new Reservation(DayOfWeek.MONDAY, new LocalTime(11), DayOfWeek.TUESDAY, new LocalTime(11), room);
+        reservation2 = new Reservation(DayOfWeek.TUESDAY, new LocalTime(11), DayOfWeek.WEDNESDAY, new LocalTime(11), room);
+        reservation3 = new Reservation(DayOfWeek.WEDNESDAY, new LocalTime(11), DayOfWeek.THURSDAY, new LocalTime(11), room);
+        order = new Order(user, reservation);
+        order2 = new Order(user, reservation2);
+        order3 = new Order(user2, reservation3);
         orders = new HashMap<>();
         orders.put(1, order);
         orders.put(2, order2);
@@ -118,4 +119,5 @@ public class UserServiceTest {
         for(int i=0; i<counter; i++)
             Files.delete(Paths.get("target/" + databaseFilename + i + ".json"));
     }
+     */
 }

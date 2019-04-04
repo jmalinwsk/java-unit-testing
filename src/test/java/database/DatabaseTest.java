@@ -35,7 +35,7 @@ public class DatabaseTest {
     @DisplayName("correct serialization")
     public void serializeDatabase2Test() throws IOException {
         HashMap<Integer, Hotel> hotels = new HashMap<>();
-        hotels.put(1, new Hotel(1, "Sample Hotel", new LocalTime(10), new LocalTime(23)));
+        hotels.put(1, new Hotel("Sample Hotel", new LocalTime(10), new LocalTime(23)));
         database.setHotels(hotels);
 
         assertEquals(0, database.serializeDatabase(databaseFilename + counter));
@@ -47,7 +47,7 @@ public class DatabaseTest {
     public void deserializeDatabaseTest() throws IOException {
         File file = new File("target/" + databaseFilename + counter + ".json");
         HashMap<Integer, Hotel> hotels = new HashMap<>();
-        hotels.put(1, new Hotel(1, "Sample Hotel", new LocalTime(10L), new LocalTime(23L)));
+        hotels.put(1, new Hotel("Sample Hotel", new LocalTime(10L), new LocalTime(23L)));
         database.setHotels(hotels);
         database.serializeDatabase(databaseFilename + counter);
         Database newDatabase = deserializeDatabase(databaseFilename + counter);
