@@ -12,13 +12,18 @@ public class HotelService {
      * @param hotel variable with hotel
      * @return true if validation is valid
      * @throws DateTimeException when open hour is after close hour
-     * @throws NullPointerException when hotel variable is null
+     * @throws NullPointerException when hotel variable or hotel name is null
      */
     public boolean hotelValidation(Hotel hotel) {
-        if(hotel.getName() != null)
-            if(hotel.getOpenHour().isBefore(hotel.getCloseHour()))
-                return true;
-            else throw new DateTimeException("Open hour is after close hour!");
+        if(hotel != null &&
+                hotel.getName() != null &&
+                hotel.getOpenHour() != null &&
+                hotel.getCloseHour() != null)
+                if(!hotel.getName().equals(""))
+                    if(hotel.getOpenHour().isBefore(hotel.getCloseHour()))
+                        return true;
+                    else throw new DateTimeException("Open hour is after close hour!");
+                else throw new IllegalArgumentException();
         else throw new NullPointerException();
     }
 
