@@ -7,8 +7,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.HashMap;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserServiceTest {
     private Database database;
@@ -58,6 +60,59 @@ public class UserServiceTest {
     public void userValidation5Test() {
         user.setEmail("invalid email");
         assertFalse(userService.userValidation(user));
+    }
+
+    @Test
+    @DisplayName("adding user to database (valid)")
+    public void addUserToDatabaseTest() {
+        assertEquals(new HashMap<Integer, User>(), database.getUsers());
+
+        userService.addUserToDatabase(database, user);
+
+        HashMap<Integer, User> usersTemp = new HashMap<>();
+        usersTemp.put(1, user);
+        assertEquals(usersTemp, database.getUsers());
+    }
+
+    @Test
+    @DisplayName("adding user to database" +
+            "(throws NullPointerException when database is null")
+    public void addUserToDatabase2Test() {
+        assertThrows(NullPointerException.class,
+                userService.addUserToDatabase(null, user));
+    }
+
+    @Test
+    @DisplayName("adding user to database" +
+            "(throws NullPointerException when database is null")
+    public void addUserToDatabase3Test() {
+        assertThrows(NullPointerException.class,
+                userService.addUserToDatabase(null, user));
+    }
+
+    @Test
+    @DisplayName("adding user to database" +
+            "(throws NullPointerException when user is null")
+    public void addUserToDatabase4Test() {
+        assertThrows(NullPointerException.class,
+                userService.addUserToDatabase(database, null));
+    }
+
+    @Test
+    @DisplayName("adding user to database" +
+            "(throws NullPointerException when database and user are null")
+    public void addUserToDatabase5Test() {
+        assertThrows(NullPointerException.class,
+                userService.addUserToDatabase(null, null));
+    }
+
+    @Test
+    @DisplayName("adding user to database " +
+            "(throws IllegalArgumentException when user doesn't pass validation)")
+    public void addUserToDatabase6Test() {
+        assertThrows(IllegalArgumentException.class,
+                () -> userService.addUserToDatabase(database,
+                        new User(null)));
     }
 
 
