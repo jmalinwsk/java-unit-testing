@@ -16,12 +16,10 @@ public class HotelService {
         if(hotel != null &&
                 hotel.getName() != null &&
                 hotel.getOpenHour() != null &&
-                hotel.getCloseHour() != null)
-                if(!hotel.getName().equals(""))
-                    if(hotel.getOpenHour().isBefore(hotel.getCloseHour()))
+                hotel.getCloseHour() != null &&
+                !hotel.getName().equals("") &&
+                hotel.getOpenHour().isBefore(hotel.getCloseHour()))
                         return true;
-                    else return false;
-                else return false;
         else return false;
     }
 
