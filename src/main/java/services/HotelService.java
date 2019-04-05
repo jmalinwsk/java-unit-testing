@@ -20,24 +20,24 @@ public class HotelService {
                 if(!hotel.getName().equals(""))
                     if(hotel.getOpenHour().isBefore(hotel.getCloseHour()))
                         return true;
-                    else throw new DateTimeException("Open hour is after close hour!");
-                else throw new IllegalArgumentException();
-        else throw new NullPointerException();
+                    else return false;
+                else return false;
+        else return false;
     }
 
-    /** adding hotel to the database
-     * @param database variable of database
-     * @param hotel variable with new hotel
+    /** Validates hotel value and if valid, adds hotel to the database.
+     * @param database database variable
+     * @param newHotel new hotel variable
      * @throws IllegalArgumentException when validation of hotel is wrong
      */
-    public void addHotelToDatabase(Database database, Hotel hotel) {
-        if (database != null) {
-            Integer id = database.getNextHotelId();
-            hotel.setId(id);
+    public void addHotelToDatabase(Database database, Hotel newHotel) {
+        if (hotelValidation(newHotel)) {
+            if (database != null) {
+                Integer id = database.getNextHotelId();
+                newHotel.setId(id);
 
-            hotelValidation(hotel);
-            database.getHotels().put(id, hotel);
-        }
-        else throw new NullPointerException();
+                database.getHotels().put(id, newHotel);
+            } else throw new NullPointerException();
+        } else throw new IllegalArgumentException();
     }
 }
