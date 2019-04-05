@@ -40,7 +40,8 @@ public class UserServiceTest {
     @DisplayName("validation of user " +
             "(returns false because email is an empty string")
     public void userValidation3Test() {
-        assertFalse(userService.userValidation(""));
+        user.setEmail("");
+        assertFalse(userService.userValidation(user));
     }
 
     @Test

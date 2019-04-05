@@ -1,21 +1,26 @@
 package services;
 
+import models.User;
+
 public class UserService {
+    /** @implNote http://emailregex.com/ */
+    private String emailPattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-" +
+            "9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\" +
+            "x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f]" +
+            ")*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-" +
+            "9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.)" +
+            "{3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:" +
+            "[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x" +
+            "01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)])";
 
-    /*public HashMap<Integer, Order> getOrdersOfUser(String databaseName, User user) throws IOException {
-        if (user != null && databaseName != null) {
-            Database database = Database.deserializeDatabase(databaseName);
-            HashMap<Integer, Order> orders = new HashMap<>();
-            Integer id = 1;
-
-            for (Order order : database.getOrders().values()) {
-                if (order.getUser().getId().equals(user.getId())) {
-                    orders.put(id, order);
-                    id++;
-                }
-            }
-            return orders;
-        } else throw new IllegalArgumentException();
-    }*/
-
+    /** Validation of user.
+     * @return true if validation is valid or false if validation is invalid
+     */
+    public boolean userValidation(User user) {
+        if(user != null &&
+            user.getEmail() != null &&
+            user.getEmail().matches(emailPattern))
+            return true;
+        else return false;
+    }
 }
