@@ -5,7 +5,6 @@ import models.Hotel;
 import org.joda.time.LocalTime;
 import org.junit.jupiter.api.*;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -128,5 +127,4 @@ public class HotelServiceTest {
         hotelService = null;
         hotel = null;
     }
-
 }

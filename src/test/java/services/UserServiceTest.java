@@ -115,7 +115,6 @@ public class UserServiceTest {
                         new User(null)));
     }
 
-
     @AfterEach
     public void cleanup() {
         database = null;
