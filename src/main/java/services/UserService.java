@@ -1,5 +1,6 @@
 package services;
 
+import database.Database;
 import models.User;
 
 public class UserService {
@@ -22,5 +23,16 @@ public class UserService {
             user.getEmail().matches(emailPattern))
             return true;
         else return false;
+    }
+
+    public void addUserToDatabase(Database database, User newUser) {
+        if (userValidation(newUser)) {
+            if (database != null) {
+                Integer id = database.getNextUserId();
+                newUser.setId(id);
+
+                database.getUsers().put(id, newUser);
+            } else throw new NullPointerException();
+        } else throw new IllegalArgumentException();
     }
 }
