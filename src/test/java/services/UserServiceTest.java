@@ -79,7 +79,7 @@ public class UserServiceTest {
             "(throws NullPointerException when database is null")
     public void addUserToDatabase2Test() {
         assertThrows(NullPointerException.class,
-                userService.addUserToDatabase(null, user));
+                () -> userService.addUserToDatabase(null, user));
     }
 
     @Test
@@ -87,23 +87,23 @@ public class UserServiceTest {
             "(throws NullPointerException when database is null")
     public void addUserToDatabase3Test() {
         assertThrows(NullPointerException.class,
-                userService.addUserToDatabase(null, user));
+                () -> userService.addUserToDatabase(null, user));
     }
 
     @Test
     @DisplayName("adding user to database" +
-            "(throws NullPointerException when user is null")
+            "(throws IllegalArgumentException when user is null")
     public void addUserToDatabase4Test() {
-        assertThrows(NullPointerException.class,
-                userService.addUserToDatabase(database, null));
+        assertThrows(IllegalArgumentException.class,
+                () -> userService.addUserToDatabase(database, null));
     }
 
     @Test
     @DisplayName("adding user to database" +
-            "(throws NullPointerException when database and user are null")
+            "(throws IllegalArgumentException when database and user are null")
     public void addUserToDatabase5Test() {
-        assertThrows(NullPointerException.class,
-                userService.addUserToDatabase(null, null));
+        assertThrows(IllegalArgumentException.class,
+                () -> userService.addUserToDatabase(null, null));
     }
 
     @Test

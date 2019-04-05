@@ -79,7 +79,7 @@ public class HotelServiceTest {
 
     @Test
     @DisplayName("adding hotel to database (valid)")
-    public void addHotelToDatabaseTest() throws IOException {
+    public void addHotelToDatabaseTest() {
         assertEquals(new HashMap<Integer, Hotel>(), database.getHotels());
 
         hotelService.addHotelToDatabase(database, hotel);
@@ -91,7 +91,7 @@ public class HotelServiceTest {
 
     @Test
     @DisplayName("adding hotel to database " +
-            "(throws IOException when database is null)")
+            "(throws NullPointerException when database is null)")
     public void addHotelToDatabase2Test() {
         assertThrows(NullPointerException.class,
                 () -> hotelService.addHotelToDatabase(null, hotel));
@@ -107,7 +107,7 @@ public class HotelServiceTest {
 
     @Test
     @DisplayName("adding hotel to database " +
-            "(throws IllegalArgumentException when database and hotel is null)")
+            "(throws IllegalArgumentException when database and hotel are null)")
     public void addHotelToDatabase4Test() {
         assertThrows(IllegalArgumentException.class,
                 () -> hotelService.addHotelToDatabase(null, null));
