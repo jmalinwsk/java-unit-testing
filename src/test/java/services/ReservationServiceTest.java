@@ -93,10 +93,76 @@ public class ReservationServiceTest {
     }
 
     @Test
+    @DisplayName("adding reservation to database (valid)")
+    public void addReservationToDatabaseTest() {
+        assertTrue(database.getReservations().isEmpty());
+
+        reservationService.addReservationToDatabase(database, reservation);
+
+        HashMap<Integer, Reservation> reservationsTemp = new HashMap<>();
+        reservationsTemp.put(1, reservation);
+        assertEquals(reservationsTemp, database.getRooms());
+    }
+
+    @Test
+    @DisplayName("adding reservation to database " +
+            "(throws NullPointerException when database is null")
+    public void addRoomToDatabase2Test() {
+        assertThrows(NullPointerException.class,
+                () -> reservationService.addReservationToDatabase(null, reservation));
+    }
+
+    @Test
+    @DisplayName("adding reservation to database " +
+            "(throws IllegalArgumentException when reservation is null")
+    public void addRoomToDatabase3Test() {
+        assertThrows(IllegalArgumentException.class,
+                () -> reservationService.addReservationToDatabase(database, null));
+    }
+
+    @Test
+    @DisplayName("adding reservation to database " +
+            "(throws IllegalArgumentException when database and reservation are null")
+    public void addRoomToDatabase4Test() {
+        assertThrows(IllegalArgumentException.class,
+                () -> reservationService.addReservationToDatabase(null, null));
+    }
+
+    @Test
+    @DisplayName("adding reservation to database" +
+            "(throws IllegalArgumentException when reservation doesn't pass validation")
+    public void addRoomToDatabase5Test() {
+        reservation.setEndDate(null);
+        assertThrows(IllegalArgumentException.class,
+                () -> reservationService.addReservationToDatabase(database, reservation));
+    }
+
+    @Test
+    @DisplayName("adding reservation to database" +
+            "(throws NullPointerException when room doesn't exist in database")
+    public void addRoomToDatabase6Test() {
+        reservation.getRoom().setHotel(new Hotel("Example name 2", new LocalTime(7), new LocalTime(22)));
+        assertThrows(NullPointerException.class,
+                () -> reservationService.addReservationToDatabase(database, reservation));
+    }
+
+    @Test
+    @DisplayName("adding reservation to database" +
+            "(throws NullPointerException when user doesn't exist in database")
+    public void addRoomToDatabase7Test() {
+        reservation.getUser().setEmail("example@example.com");
+        assertThrows(NullPointerException.class,
+                () -> reservationService.addReservationToDatabase(database, reservation));
+    }
+
+
+    @Test
     @DisplayName("getting reservations of specific user when hashmap of user's revervations is not empty")
     public void getReservationsOfUserTest() {
         HashMap<Integer, Reservation> reservations = new HashMap<>();
         reservations.put(1, reservation);
+        reservationService.addReservationToDatabase(database, reservation);
+
         assertEquals(reservations, reservationService.getReservationsOfUser(database, user));
     }
 
