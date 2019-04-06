@@ -15,7 +15,7 @@ public class UserService {
             "01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)])";
 
     /** Validation of user.
-     * @return true if validation is valid or false if validation is invalid
+     * @return true if user is valid or false if user is invalid
      */
     public boolean userValidation(User user) {
         if(user != null &&
@@ -25,6 +25,9 @@ public class UserService {
         else return false;
     }
 
+    /** Validates user value and if valid, adds user to the database.
+     * @throws IllegalArgumentException when validation of user is wrong
+     */
     public void addUserToDatabase(Database database, User newUser) {
         if (userValidation(newUser)) {
             if (database != null) {

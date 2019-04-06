@@ -7,7 +7,7 @@ import java.time.DateTimeException;
 
 public class HotelService {
     /** Validation of hotel.
-     * @return true if validation is valid or false if validation is invalid
+     * @return true if hotel is valid or false if hotel is invalid
      */
     public boolean hotelValidation(Hotel hotel) {
         if(hotel != null &&
