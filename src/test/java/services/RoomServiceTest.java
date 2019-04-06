@@ -18,14 +18,16 @@ public class RoomServiceTest {
     private Database database;
     private RoomService roomService;
     private Room room;
+    private Hotel hotel;
+    private HotelService hotelService;
 
     @BeforeEach
     public void init() {
         database = new Database();
         roomService = new RoomService();
-        Hotel hotel = new Hotel("Sample name",
+        hotel = new Hotel("Sample name",
                 new LocalTime(6), new LocalTime(22));
-        HotelService hotelService = new HotelService();
+        hotelService = new HotelService();
         hotelService.addHotelToDatabase(database, hotel);
         room = new Room(hotel, 232, 3);
     }
