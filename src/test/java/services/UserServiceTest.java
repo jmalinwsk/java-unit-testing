@@ -84,14 +84,6 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("adding user to database" +
-            "(throws NullPointerException when database is null")
-    public void addUserToDatabase3Test() {
-        assertThrows(NullPointerException.class,
-                () -> userService.addUserToDatabase(null, user));
-    }
-
-    @Test
-    @DisplayName("adding user to database" +
             "(throws IllegalArgumentException when user is null")
     public void addUserToDatabase4Test() {
         assertThrows(IllegalArgumentException.class,

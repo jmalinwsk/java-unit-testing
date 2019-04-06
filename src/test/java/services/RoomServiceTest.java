@@ -104,6 +104,15 @@ public class RoomServiceTest {
                 () -> roomService.addRoomToDatabase(null, null));
     }
 
+    @Test
+    @DisplayName("adding room to database" +
+            "(throws IllegalArgumentException when room doesn't pass validation")
+    public void addRoomToDatabase5Test() {
+        room.setNumberOfRoom(-20);
+        assertThrows(IllegalArgumentException.class,
+                () -> roomService.addRoomToDatabase(database, room));
+    }
+
     @AfterEach
     public void cleanup() {
         database = null;
