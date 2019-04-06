@@ -66,7 +66,7 @@ public class ReservationServiceTest {
     @Test
     @DisplayName("validation of reservation " +
             "(returns false because user in reservation is null)")
-    public void reservationValidation5Test() {
+    public void reservationValidation4Test() {
         reservation.setUser(null);
         assertFalse(reservationService.reservationValidation(reservation));
     }
@@ -74,7 +74,7 @@ public class ReservationServiceTest {
     @Test
     @DisplayName("validation of reservation " +
             "(returns false because room in reservation is null)")
-    public void reservationValidation6Test() {
+    public void reservationValidation5Test() {
         reservation.setRoom(null);
         assertFalse(reservationService.reservationValidation(reservation));
     }
@@ -82,7 +82,7 @@ public class ReservationServiceTest {
     @Test
     @DisplayName("validation of reservation " +
             "(returns false because user and room in reservation is null)")
-    public void reservationValidation4Test() {
+    public void reservationValidation6Test() {
         reservation.setUser(null);
         reservation.setRoom(null);
         assertFalse(reservationService.reservationValidation(reservation));
