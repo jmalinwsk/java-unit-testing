@@ -15,7 +15,21 @@ public class RoomService {
         else return false;
     }
 
-    public void addRoomToDatabase(Database database, Room room) {
-
+    /** Validates room value + checking if hotel associated to room exists
+     * in database exists and if valid, adds room to the database.
+     * @throws IllegalArgumentException when validation of room is wrong
+     * @throws NullPointerException when hotel associated to room doesn't
+     * exists in database
+     */
+    public void addRoomToDatabase(Database database, Room newRoom) {
+        if(roomValidation(newRoom)) {
+            if(database != null &&
+                    database.getHotels().containsKey(newRoom.getHotel().getId()) &&
+                    database.getHotels().containsValue(newRoom.getHotel())) {
+                Integer id = database.getNextRoomId();
+                newRoom.setId(id);
+                    database.getRooms().put(id, newRoom);
+            } else throw new NullPointerException();
+        } else throw new IllegalArgumentException();
     }
 }

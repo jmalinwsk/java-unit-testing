@@ -25,6 +25,8 @@ public class RoomServiceTest {
         roomService = new RoomService();
         Hotel hotel = new Hotel("Sample name",
                 new LocalTime(6), new LocalTime(22));
+        HotelService hotelService = new HotelService();
+        hotelService.addHotelToDatabase(database, hotel);
         room = new Room(hotel, 232, 3);
     }
 
@@ -71,20 +73,20 @@ public class RoomServiceTest {
     @Test
     @DisplayName("adding room to database (valid)")
     public void addRoomToDatabaseTest() {
-        assertEquals(new HashMap<Integer, Room>(), database.getRooms());
+        assertTrue(database.getRooms().isEmpty());
 
         roomService.addRoomToDatabase(database, room);
 
         HashMap<Integer, Room> roomsTemp = new HashMap<>();
         roomsTemp.put(1, room);
-        assertEquals(roomsTemp, database.getHotels());
+        assertEquals(roomsTemp, database.getRooms());
     }
 
     @Test
     @DisplayName("adding room to database " +
-            "(throws IllegalArgumentException when database is null")
+            "(throws NullPointerException when database is null")
     public void addRoomToDatabase2Test() {
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(NullPointerException.class,
                 () -> roomService.addRoomToDatabase(null, room));
     }
 
@@ -110,6 +112,15 @@ public class RoomServiceTest {
     public void addRoomToDatabase5Test() {
         room.setNumberOfRoom(-20);
         assertThrows(IllegalArgumentException.class,
+                () -> roomService.addRoomToDatabase(database, room));
+    }
+
+    @Test
+    @DisplayName("adding room to database" +
+            "(throws NullPointerException when hotel doesn't exist in database")
+    public void addRoomToDatabase6Test() {
+        room.setHotel(new Hotel("Example name 2", new LocalTime(7), new LocalTime(22)));
+        assertThrows(NullPointerException.class,
                 () -> roomService.addRoomToDatabase(database, room));
     }
 
