@@ -14,6 +14,7 @@ public class Reservation {
     public Reservation(DateTime startDate, DateTime endDate, User user, Room room) {
         this.startDate = startDate;
         this.endDate = endDate;
+        this.user = user;
         this.room = room;
     }
 
