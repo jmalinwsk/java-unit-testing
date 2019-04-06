@@ -24,7 +24,6 @@ public class RoomService {
     public void addRoomToDatabase(Database database, Room newRoom) {
         if(roomValidation(newRoom)) {
             if(database != null &&
-                    database.getHotels().containsKey(newRoom.getHotel().getId()) &&
                     database.getHotels().containsValue(newRoom.getHotel())) {
                 Integer id = database.getNextRoomId();
                 newRoom.setId(id);
