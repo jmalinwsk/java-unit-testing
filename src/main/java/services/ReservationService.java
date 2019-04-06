@@ -16,13 +16,22 @@ public class ReservationService {
         else return false;
     }
 
-    public void addReservationToDatabase(Database database, Reservation reservation) {
 
+    public void addReservationToDatabase(Database database, Reservation newReservation) {
+        if(reservationValidation(newReservation)) {
+            if(database != null &&
+                    database.getUsers().containsValue(newReservation.getUser()) &&
+                    database.getRooms().containsValue(newReservation.getRoom())) {
+                Integer id = database.getNextRoomId();
+                newReservation.setId(id);
+                database.getReservations().put(id, newReservation);
+            } else throw new NullPointerException();
+        } else throw new IllegalArgumentException();
     }
 
     public HashMap<Integer, Reservation> getReservationsOfUser(Database database, User user) {
         HashMap<Integer, Reservation> reservationsOfUser = new HashMap<>();
-        int counter = 0;
+        int counter = 1;
         for (Reservation r : database.getReservations().values())
             if (r.getUser() == user) {
                 reservationsOfUser.put(counter, r);

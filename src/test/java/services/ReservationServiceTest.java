@@ -100,8 +100,8 @@ public class ReservationServiceTest {
         reservationService.addReservationToDatabase(database, reservation);
 
         HashMap<Integer, Reservation> reservationsTemp = new HashMap<>();
-        reservationsTemp.put(1, reservation);
-        assertEquals(reservationsTemp, database.getRooms());
+        reservationsTemp.put(2, reservation);
+        assertEquals(reservationsTemp, database.getReservations());
     }
 
     @Test
@@ -141,7 +141,7 @@ public class ReservationServiceTest {
     @DisplayName("adding reservation to database" +
             "(throws NullPointerException when room doesn't exist in database")
     public void addRoomToDatabase6Test() {
-        reservation.getRoom().setHotel(new Hotel("Example name 2", new LocalTime(7), new LocalTime(22)));
+        reservation.setRoom(new Room(hotel, 666, 1));
         assertThrows(NullPointerException.class,
                 () -> reservationService.addReservationToDatabase(database, reservation));
     }
@@ -150,7 +150,7 @@ public class ReservationServiceTest {
     @DisplayName("adding reservation to database" +
             "(throws NullPointerException when user doesn't exist in database")
     public void addRoomToDatabase7Test() {
-        reservation.getUser().setEmail("example@example.com");
+        reservation.setUser(new User("example@example.pl"));
         assertThrows(NullPointerException.class,
                 () -> reservationService.addReservationToDatabase(database, reservation));
     }
