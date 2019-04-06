@@ -172,6 +172,48 @@ public class ReservationServiceTest {
         assertTrue(reservationService.getReservationsOfUser(database, user2).isEmpty());
     }
 
+    @Test
+    @DisplayName("getting reservations of specific user" +
+            "(throws IllegalArgumentException when database is null")
+    public void getReservationsOfUser3Test() {
+        assertThrows(NullPointerException.class,
+                () -> reservationService.getReservationsOfUser(null, user));
+    }
+
+    @Test
+    @DisplayName("getting reservations of specific user" +
+            "(throws IllegalArgumentException when user is null")
+    public void getReservationsOfUser4Test() {
+        assertThrows(NullPointerException.class,
+                () -> reservationService.getReservationsOfUser(database, null));
+    }
+
+    @Test
+    @DisplayName("getting reservations of specific user" +
+            "(throws IllegalArgumentException when database and user are null")
+    public void getReservationsOfUser5Test() {
+        assertThrows(NullPointerException.class,
+                () -> reservationService.getReservationsOfUser(null, null));
+    }
+
+    @Test
+    @DisplayName("getting reservations of specific user " +
+            "(throws NullPointerException when user doesn't exist in database)")
+    public void getReservationsOfUser6Test() {
+        reservation.setUser(new User("example@example.com"));
+        assertThrows(NullPointerException.class,
+                () -> reservationService.getReservationsOfUser(database, user));
+    }
+
+    @Test
+    @DisplayName("getting reservations of specific user " +
+            "(throws NullPointerException when user doesn't exist in database)")
+    public void getReservationsOfUser7Test() {
+        reservation.setRoom(new Room(hotel, 666, 1));
+        assertThrows(NullPointerException.class,
+                () -> reservationService.getReservationsOfUser(database, user));
+    }
+
     @AfterEach
     public void cleanup() {
         database = null;
