@@ -22,7 +22,7 @@ public class ReservationService {
             if(database != null &&
                     database.getUsers().containsValue(newReservation.getUser()) &&
                     database.getRooms().containsValue(newReservation.getRoom())) {
-                Integer id = database.getNextRoomId();
+                Integer id = database.getNextReservationId();
                 newReservation.setId(id);
                 database.getReservations().put(id, newReservation);
             } else throw new NullPointerException();
@@ -30,13 +30,15 @@ public class ReservationService {
     }
 
     public HashMap<Integer, Reservation> getReservationsOfUser(Database database, User user) {
-        HashMap<Integer, Reservation> reservationsOfUser = new HashMap<>();
-        int counter = 1;
-        for (Reservation r : database.getReservations().values())
-            if (r.getUser() == user) {
-                reservationsOfUser.put(counter, r);
-                counter++;
-            }
-        return reservationsOfUser;
+        if (user != null && database != null) {
+            HashMap<Integer, Reservation> reservationsOfUser = new HashMap<>();
+            int counter = 1;
+            for (Reservation r : database.getReservations().values())
+                if (r.getUser() == user) {
+                    reservationsOfUser.put(counter, r);
+                    counter++;
+                }
+            return reservationsOfUser;
+        } else throw new NullPointerException();
     }
 }
