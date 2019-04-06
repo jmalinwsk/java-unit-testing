@@ -9,8 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.HashMap;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ReservationServiceTest {
     private Database database;
@@ -21,6 +22,7 @@ public class ReservationServiceTest {
     private Reservation reservation;
     private Room room;
     private User user;
+    private User user2;
     private Hotel hotel;
 
     @BeforeEach
@@ -33,12 +35,14 @@ public class ReservationServiceTest {
         hotel = new Hotel("Sample name", new LocalTime(8), new LocalTime(23));
         room = new Room(hotel, 200, 2);
         user = new User("test@test.com");
+        user2 = new User("test2@test2.com");
         reservation = new Reservation(new DateTime(2019, 5, 5, 11, 0),
                 new DateTime(2019, 5, 6, 11, 0),
                 user, room);
         hotelService.addHotelToDatabase(database, hotel);
         roomService.addRoomToDatabase(database, room);
         userService.addUserToDatabase(database, user);
+        userService.addUserToDatabase(database, user2);
     }
 
     @Test
@@ -86,6 +90,20 @@ public class ReservationServiceTest {
         reservation.setUser(null);
         reservation.setRoom(null);
         assertFalse(reservationService.reservationValidation(reservation));
+    }
+
+    @Test
+    @DisplayName("getting reservations of specific user when hashmap of user's revervations is not empty")
+    public void getReservationsOfUserTest() {
+        HashMap<Integer, Reservation> reservations = new HashMap<>();
+        reservations.put(1, reservation);
+        assertEquals(reservations, reservationService.getReservationsOfUser(database, user));
+    }
+
+    @Test
+    @DisplayName("getting reservations of specific user when hashmap of user's revervation is empty")
+    public void getReservationsOfUser2Test() {
+        assertTrue(reservationService.getReservationsOfUser(database, user2).isEmpty());
     }
 
     @AfterEach
