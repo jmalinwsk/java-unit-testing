@@ -9,8 +9,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.HashMap;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RoomServiceTest {
     private Database database;
@@ -66,8 +68,41 @@ public class RoomServiceTest {
         assertFalse(roomService.roomValidation(room));
     }
 
+    @Test
+    @DisplayName("adding room to database (valid)")
+    public void addRoomToDatabaseTest() {
+        assertEquals(new HashMap<Integer, Room>(), database.getRooms());
 
+        roomService.addRoomToDatabase(database, room);
 
+        HashMap<Integer, Room> roomsTemp = new HashMap<>();
+        roomsTemp.put(1, room);
+        assertEquals(roomsTemp, database.getHotels());
+    }
+
+    @Test
+    @DisplayName("adding room to database " +
+            "(throws IllegalArgumentException when database is null")
+    public void addRoomToDatabase2Test() {
+        assertThrows(IllegalArgumentException.class,
+                () -> roomService.addRoomToDatabase(null, room));
+    }
+
+    @Test
+    @DisplayName("adding room to database " +
+            "(throws IllegalArgumentException when room is null")
+    public void addRoomToDatabase3Test() {
+        assertThrows(IllegalArgumentException.class,
+                () -> roomService.addRoomToDatabase(database, null));
+    }
+
+    @Test
+    @DisplayName("adding room to database " +
+            "(throws IllegalArgumentException when database and room are null")
+    public void addRoomToDatabase4Test() {
+        assertThrows(IllegalArgumentException.class,
+                () -> roomService.addRoomToDatabase(null, null));
+    }
 
     @AfterEach
     public void cleanup() {
