@@ -4,10 +4,7 @@ import database.Database;
 import models.*;
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.DateTimeException;
 import java.util.HashMap;
@@ -180,6 +177,7 @@ public class ReservationServiceTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("adding reservation to database " +
             "(throws DateTimeException because selected date (that covers other date) " +
             "is reserved by other person)")
