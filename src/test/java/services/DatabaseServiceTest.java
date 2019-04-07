@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
 
 import java.util.HashMap;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseServiceTest {
@@ -64,7 +65,7 @@ public class DatabaseServiceTest {
     @Test
     @DisplayName("returns number of day in week that is the most crowded by clients")
     public void theMostCrowdedDayOfTheWeekTest() {
-        assertEquals(3, databaseService.theMostCrowdedDayOfTheWeek(database));
+        assertThat(databaseService.theMostCrowdedDayOfTheWeek(database)).isEqualTo(3);
     }
 
     @Test

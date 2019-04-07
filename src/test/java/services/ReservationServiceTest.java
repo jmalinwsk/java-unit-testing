@@ -9,6 +9,8 @@ import org.junit.jupiter.api.*;
 import java.time.DateTimeException;
 import java.util.HashMap;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ReservationServiceTest {
@@ -64,7 +66,7 @@ public class ReservationServiceTest {
     @DisplayName("validation of reservation (valid)")
     public void reservationValidationTest() {
         boolean result = reservationService.reservationValidation(reservation);
-        assertTrue(result);
+        assertThat(result, is(anyOf(equalTo(true))));
     }
 
     @Test

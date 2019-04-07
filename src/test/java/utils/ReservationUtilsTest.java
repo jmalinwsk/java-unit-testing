@@ -7,8 +7,12 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 import org.junit.jupiter.api.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ReservationUtilsTest {
     private Reservation r1;
@@ -28,7 +32,7 @@ public class ReservationUtilsTest {
                 new DateTime(2019, 4, 5, 10, 0),
                 null, null);
 
-        assertTrue(ReservationUtils.hasMinutesInDate(r1));
+        assertThat(ReservationUtils.hasMinutesInDate(r1)).isTrue();
     }
 
     @Test
@@ -39,7 +43,7 @@ public class ReservationUtilsTest {
                 new DateTime(2019, 4, 5, 10, 1),
                 null, null);
 
-        assertTrue(ReservationUtils.hasMinutesInDate(r1));
+        assertThat(ReservationUtils.hasMinutesInDate(r1)).isTrue();
     }
 
     @Test
@@ -50,7 +54,7 @@ public class ReservationUtilsTest {
                 new DateTime(2019, 4, 5, 10, 0),
                 null, null);
 
-        assertFalse(ReservationUtils.hasMinutesInDate(r1));
+        assertThat(ReservationUtils.hasMinutesInDate(r1)).isEqualTo(false);
     }
 
     @Test
@@ -82,7 +86,7 @@ public class ReservationUtilsTest {
                 new DateTime(2019, 4, 5, 20, 0),
                 null, null);
 
-        assertFalse(ReservationUtils.isContainedIn(r1, r2));
+        assertThat(ReservationUtils.hasMinutesInDate(r1)).isFalse();
     }
 
     @Test
@@ -98,7 +102,7 @@ public class ReservationUtilsTest {
                 new DateTime(2019, 4, 11, 10, 0),
                 null, null);
 
-        assertTrue(ReservationUtils.isEqualTo(r1, r2));
+        assertThat(ReservationUtils.isEqualTo(r1, r2), equalTo(true));
     }
 
     @Test
@@ -114,7 +118,7 @@ public class ReservationUtilsTest {
                 new DateTime(2019, 4, 11, 11, 0),
                 null, null);
 
-        assertFalse(ReservationUtils.isEqualTo(r1, r2));
+        assertThat(ReservationUtils.isEqualTo(r1, r2), not(true));
     }
 
     @Test
@@ -135,7 +139,7 @@ public class ReservationUtilsTest {
                 new DateTime(2019, 4, 11, 11, 0),
                 null, room1);
 
-        assertTrue(ReservationUtils.ifRoomIsInTheSameHotel(r1, r2));
+        assertThat(ReservationUtils.ifRoomIsInTheSameHotel(r1, r2), is(true));
     }
 
     @Test
@@ -157,7 +161,7 @@ public class ReservationUtilsTest {
                 new DateTime(2019, 4, 11, 11, 0),
                 null, room2);
 
-        assertFalse(ReservationUtils.ifRoomIsInTheSameHotel(r1, r2));
+        assertThat(ReservationUtils.ifRoomIsInTheSameHotel(r1, r2), is(false));
     }
 
     @Test
