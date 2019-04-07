@@ -193,6 +193,19 @@ public class ReservationServiceTest {
                 () -> reservationService.addReservationToDatabase(database, newReservation));
     }
 
+    @Test
+    @DisplayName("adding reservation to database" +
+            "(checking if returned identificator is valid)")
+    public void addReservationToDatabase10Test() {
+        reservationService.addReservationToDatabase(database, reservation);
+        String identificator = reservation.getStartDate().toString() +
+                reservation.getEndDate().toString() +
+                reservation.getRoom().getNumberOfRoom() +
+                reservation.getRoom().getHotel().getName();
+
+        assertEquals(identificator, database.getReservations().get(1).getIdentificator());
+    }
+
 
     @Test
     @DisplayName("getting reservations of specific user when hashmap of user's revervations is not empty")
