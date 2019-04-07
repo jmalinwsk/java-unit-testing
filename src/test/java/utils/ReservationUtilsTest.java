@@ -2,10 +2,7 @@ package utils;
 
 import models.Reservation;
 import org.joda.time.DateTime;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -118,6 +115,7 @@ public class ReservationUtilsTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("checks if date of first reservation has a product of sets with " +
             "date of second reservation and returns true")
     public void hasAProductOfSetsTest() {
