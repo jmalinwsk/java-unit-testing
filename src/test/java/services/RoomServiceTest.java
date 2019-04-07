@@ -8,6 +8,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 
@@ -108,11 +110,12 @@ public class RoomServiceTest {
                 () -> roomService.addRoomToDatabase(null, null));
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(ints = {0, -20, -1})
     @DisplayName("adding room to database" +
             "(throws IllegalArgumentException when room doesn't pass validation")
-    public void addRoomToDatabase5Test() {
-        room.setNumberOfRoom(-20);
+    public void addRoomToDatabase5Test(int i) {
+        room.setNumberOfRoom(i);
         assertThrows(IllegalArgumentException.class,
                 () -> roomService.addRoomToDatabase(database, room));
     }
