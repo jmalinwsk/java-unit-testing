@@ -86,7 +86,7 @@ public class DatabaseServiceTest {
     @Test
     @DisplayName("generating statistics (valid)")
     public void generateStatisticsTest() {
-        HashMap<String, Integer> statistics = databaseService.generateStatictics(database);
+        HashMap<String, Integer> statistics = databaseService.generateStatistics(database);
 
         assertAll(
                 () -> assertEquals(1, statistics.get("Hotels in database")),
@@ -102,7 +102,7 @@ public class DatabaseServiceTest {
             "(throws NullPointerException because database is null)")
     public void generateStatistics2Test() {
         assertThrows(NullPointerException.class,
-                () -> databaseService.generateStatictics(null));
+                () -> databaseService.generateStatistics(null));
     }
 
     @AfterEach

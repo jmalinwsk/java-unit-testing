@@ -2,7 +2,6 @@ package services;
 
 import database.Database;
 import models.Reservation;
-import models.User;
 
 import java.util.HashMap;
 
@@ -38,7 +37,7 @@ public class DatabaseService {
         } else throw new NullPointerException();
     }
 
-    public HashMap<String, Integer> generateStatictics(Database database) {
+    public HashMap<String, Integer> generateStatistics(Database database) {
         if(database != null) {
             HashMap<String, Integer> statistics = new HashMap<>();
 

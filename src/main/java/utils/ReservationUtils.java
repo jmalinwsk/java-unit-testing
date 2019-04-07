@@ -22,8 +22,8 @@ public class ReservationUtils {
     }
 
     public static boolean ifRoomIsInTheSameHotel(Reservation r1, Reservation r2) {
-        return (r1.getRoom().getId().equals(r2.getRoom().getId()) &&
-                r1.getRoom().getHotel().getId().equals(r2.getRoom().getHotel().getId()));
+        return (r1.getRoom().getHotel().getId().equals(r2.getRoom().getHotel().getId()) &&
+                        r1.getRoom().getId().equals(r2.getRoom().getId()));
     }
 
     public static boolean ifDatesHaveAnIntersect(Reservation r1, Reservation r2) {

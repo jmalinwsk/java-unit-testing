@@ -25,13 +25,15 @@ public class ReservationService {
                     database.getUsers().containsValue(newReservation.getUser()) &&
                     database.getRooms().containsValue(newReservation.getRoom())) {
                 if(!database.getReservations().isEmpty()) {
+                    if(ReservationUtils.hasMinutesInDate(newReservation))
+                        throw new DateTimeException("Start/end date has minutes!");
+
                     boolean flag = false;
                     for (Reservation r : database.getReservations().values()) {
                         if((ReservationUtils.isContainedIn(newReservation, r) ||
                         ReservationUtils.isEqualTo(newReservation, r) ||
                         ReservationUtils.ifDatesHaveAnIntersect(newReservation, r)) &&
-                        ReservationUtils.ifRoomIsInTheSameHotel(newReservation, r) &&
-                        !ReservationUtils.hasMinutesInDate(newReservation)) {
+                        ReservationUtils.ifRoomIsInTheSameHotel(newReservation, r)) {
                             flag = true;
                             break;
                         }
@@ -52,6 +54,9 @@ public class ReservationService {
                     } else throw new DateTimeException("Selected room in this date and time is reserved " +
                             "by other person!");
                 } else {
+                    if(ReservationUtils.hasMinutesInDate(newReservation))
+                        throw new DateTimeException("Start/end date has minutes!");
+
                     Integer id = database.getNextReservationId();
                     newReservation.setId(id);
 
