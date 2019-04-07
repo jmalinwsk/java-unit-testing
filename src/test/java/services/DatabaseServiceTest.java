@@ -47,8 +47,8 @@ public class DatabaseServiceTest {
         reservation2 = new Reservation(new DateTime(2019, 6, 6, 11, 0),
                 new DateTime(2019, 6, 9, 11, 0),
                 user2, room);
-        reservation3 = new Reservation(new DateTime(2018, 5, 1, 11, 0),
-                new DateTime(2018, 5, 2, 11, 0),
+        reservation3 = new Reservation(new DateTime(2018, 5, 2, 11, 0),
+                new DateTime(2018, 5, 3, 11, 0),
                 user, room);
         hotelService.addHotelToDatabase(database, hotel);
         roomService.addRoomToDatabase(database, room);
@@ -61,7 +61,7 @@ public class DatabaseServiceTest {
     }
 
     @Test
-    @DisplayName("returns number of day that is the most crowded by clients")
+    @DisplayName("returns number of day in week that is the most crowded by clients")
     public void theMostCrowdedDayOfTheWeekTest() {
         assertEquals(3, databaseService.theMostCrowdedDayOfTheWeek(database));
     }
