@@ -21,6 +21,39 @@ public class ReservationUtilsTest {
     }
 
     @Test
+    @DisplayName("returns true if date in reservation has minutes in start date")
+    public void hasMinutesInDateTest() {
+        r1 = new Reservation(
+                new DateTime(2019, 4, 4, 10, 1),
+                new DateTime(2019, 4, 5, 10, 0),
+                null, null);
+
+        assertTrue(ReservationUtils.hasMinutesInDate(r1));
+    }
+
+    @Test
+    @DisplayName("returns true if date in reservation has minutes in end date")
+    public void hasMinutesInDate2Test() {
+        r1 = new Reservation(
+                new DateTime(2019, 4, 4, 10, 0),
+                new DateTime(2019, 4, 5, 10, 1),
+                null, null);
+
+        assertTrue(ReservationUtils.hasMinutesInDate(r1));
+    }
+
+    @Test
+    @DisplayName("returns false if date in reservation hasn't minutes")
+    public void hasMinutesInDate3Test() {
+        r1 = new Reservation(
+                new DateTime(2019, 4, 4, 10, 0),
+                new DateTime(2019, 4, 5, 10, 0),
+                null, null);
+
+        assertFalse(ReservationUtils.hasMinutesInDate(r1));
+    }
+
+    @Test
     @DisplayName("checks if date of first reservation is contained in " +
             "second reservation and returns true")
     public void isContainedInTest() {

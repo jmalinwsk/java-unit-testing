@@ -181,7 +181,7 @@ public class ReservationServiceTest {
 
     @Test
     @DisplayName("adding reservation to database " +
-            "(throws DateTimeException because selected date (that cover's other date) " +
+            "(throws DateTimeException because selected date (that covers other date) " +
             "is reserved by other person)")
     public void addReservationToDatabase9Test() {
         reservationService.addReservationToDatabase(database, reservation);
