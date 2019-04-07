@@ -9,8 +9,9 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.HashMap;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseServiceTest {
     private DatabaseService databaseService;
@@ -72,6 +73,36 @@ public class DatabaseServiceTest {
     public void theMostCrowdedDayOfTheWeek2Test() {
         assertThrows(NullPointerException.class,
                 () -> databaseService.theMostCrowdedDayOfTheWeek(null));
+    }
+
+    @Test
+    @DisplayName("counting the most crowded day of the week " +
+            "(throws 0 because in database were 0 reservations)")
+    public void theMostCrowdedDayOfTheWeek3Test() {
+        Database emptyDatabase = new Database();
+        assertEquals(0, databaseService.theMostCrowdedDayOfTheWeek(emptyDatabase));
+    }
+
+    @Test
+    @DisplayName("generating statistics (valid)")
+    public void generateStatisticsTest() {
+        HashMap<String, Integer> statistics = databaseService.generateStatictics(database);
+
+        assertAll(
+                () -> assertEquals(1, statistics.get("Hotels in database")),
+                () -> assertEquals(3, statistics.get("Reservations in database")),
+                () -> assertEquals(1, statistics.get("Rooms in database")),
+                () -> assertEquals(3, statistics.get("Users in database")),
+                () -> assertEquals(3, statistics.get("The most crowded day of the week"))
+        );
+    }
+
+    @Test
+    @DisplayName("generating statistics" +
+            "(throws NullPointerException because database is null)")
+    public void generateStatistics2Test() {
+        assertThrows(NullPointerException.class,
+                () -> databaseService.generateStatictics(null));
     }
 
     @AfterEach
