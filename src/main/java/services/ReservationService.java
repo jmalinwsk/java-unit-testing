@@ -19,7 +19,7 @@ public class ReservationService {
         else return false;
     }
 
-    public void addReservationToDatabase(Database database, Reservation newReservation) {
+    public String addReservationToDatabase(Database database, Reservation newReservation) {
         if(reservationValidation(newReservation)) {
             if(database != null &&
                     database.getUsers().containsValue(newReservation.getUser()) &&
@@ -45,13 +45,24 @@ public class ReservationService {
                                 newReservation.getRoom().getNumberOfRoom() +
                                 newReservation.getRoom().getHotel().getName();
                         newReservation.setIdentificator(identificator);
+
                     database.getReservations().put(id, newReservation);
+
+                    return identificator;
                     } else throw new DateTimeException("Selected room in this date and time is reserved " +
                             "by other person!");
                 } else {
                     Integer id = database.getNextReservationId();
                     newReservation.setId(id);
+
+                    String identificator = newReservation.getStartDate().toString() +
+                            newReservation.getEndDate().toString() +
+                            newReservation.getRoom().getNumberOfRoom() +
+                            newReservation.getRoom().getHotel().getName();
+                    newReservation.setIdentificator(identificator);
+
                     database.getReservations().put(id, newReservation);
+                    return identificator;
                 }
             } else throw new NullPointerException();
         } else throw new IllegalArgumentException();
