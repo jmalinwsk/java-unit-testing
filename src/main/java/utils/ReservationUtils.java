@@ -1,7 +1,6 @@
 package utils;
 
 import models.Reservation;
-import org.joda.time.DateTime;
 
 public class ReservationUtils {
     public static boolean hasMinutesInDate(Reservation reservation) {
@@ -27,12 +26,9 @@ public class ReservationUtils {
                 r1.getRoom().getHotel().getId().equals(r2.getRoom().getHotel().getId()));
     }
 
-    //Czy a1 nalezy do a2-b2
-    //I b1 nalezy do a2-b2
-    //Jesli ktorys z tych warunków jest prawdziwy to 1 i 2 się przecinają
-    public static boolean hasAProductOfSets(Reservation r1, Reservation r2) {
-        DateTime temp = r1.getEndDate().minus(r2.getEndDate().minuteOfDay().get());
-        return (r1.getStartDate().isAfter(temp) && r1.getEndDate().isBefore(temp) ||
-                (r2.getStartDate().isAfter(temp) && r2.getEndDate().isBefore(temp)));
+    public static boolean ifDatesHaveAnIntersect(Reservation r1, Reservation r2) {
+        if(r1.getStartDate().isBefore(r2.getStartDate()))
+            return r2.getStartDate().isBefore(r1.getEndDate());
+        else return r1.getStartDate().isBefore(r2.getEndDate());
     }
 }

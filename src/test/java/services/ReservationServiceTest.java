@@ -177,7 +177,6 @@ public class ReservationServiceTest {
     }
 
     @Test
-    @Disabled
     @DisplayName("adding reservation to database " +
             "(throws DateTimeException because selected date (that covers other date) " +
             "is reserved by other person)")

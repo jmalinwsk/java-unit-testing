@@ -29,7 +29,7 @@ public class ReservationService {
                     for (Reservation r : database.getReservations().values()) {
                         if((ReservationUtils.isContainedIn(newReservation, r) ||
                         ReservationUtils.isEqualTo(newReservation, r) ||
-                        ReservationUtils.hasAProductOfSets(newReservation, r)) &&
+                        ReservationUtils.ifDatesHaveAnIntersect(newReservation, r)) &&
                         ReservationUtils.ifRoomIsInTheSameHotel(newReservation, r) &&
                         !ReservationUtils.hasMinutesInDate(newReservation)) {
                             flag = true;

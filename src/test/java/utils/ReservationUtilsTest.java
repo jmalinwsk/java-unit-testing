@@ -115,7 +115,6 @@ public class ReservationUtilsTest {
     }
 
     @Test
-    @Disabled
     @DisplayName("checks if date of first reservation has a product of sets with " +
             "date of second reservation and returns true")
     public void hasAProductOfSetsTest() {
@@ -128,7 +127,7 @@ public class ReservationUtilsTest {
                 new DateTime(2019, 4, 13, 10, 0),
                 null, null);
 
-        assertTrue(ReservationUtils.hasAProductOfSets(r1, r2));
+        assertTrue(ReservationUtils.ifDatesHaveAnIntersect(r1, r2));
     }
 
     @Test
@@ -144,7 +143,7 @@ public class ReservationUtilsTest {
                 new DateTime(2019, 4, 20, 10, 0),
                 null, null);
 
-        assertFalse(ReservationUtils.hasAProductOfSets(r1, r2));
+        assertFalse(ReservationUtils.ifDatesHaveAnIntersect(r1, r2));
     }
 
     @AfterEach
