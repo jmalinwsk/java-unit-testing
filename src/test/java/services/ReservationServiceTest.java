@@ -19,11 +19,14 @@ public class ReservationServiceTest {
     private HotelService hotelService;
     private Reservation reservation;
     private Reservation reservation2;
+    private Reservation reservation3;
     private Room room;
+    private Room room2;
     private User user;
     private User user2;
     private User user3;
     private Hotel hotel;
+    private Hotel hotel2;
 
     @BeforeEach
     public void init() {
@@ -33,7 +36,9 @@ public class ReservationServiceTest {
         userService = new UserService();
         hotelService = new HotelService();
         hotel = new Hotel("Sample name", new LocalTime(8), new LocalTime(23));
+        hotel2 = new Hotel("Sample name 2", new LocalTime(6), new LocalTime(20));
         room = new Room(hotel, 200, 2);
+        room2 = new Room(hotel2, 2, 1);
         user = new User("test@test.com");
         user2 = new User("test2@test2.com");
         user3 = new User("test3@test3.com");
@@ -42,9 +47,14 @@ public class ReservationServiceTest {
                 user, room);
         reservation2 = new Reservation(new DateTime(2019, 6, 6, 11, 0),
                 new DateTime(2019, 6, 9, 11, 0),
-                user2, room);
+                user2, room2);
+        reservation3 = new Reservation(new DateTime(2019, 8, 1, 11, 0),
+                new DateTime(2019, 8, 2, 11, 0),
+                user, room2);
         hotelService.addHotelToDatabase(database, hotel);
+        hotelService.addHotelToDatabase(database, hotel2);
         roomService.addRoomToDatabase(database, room);
+        roomService.addRoomToDatabase(database, room2);
         userService.addUserToDatabase(database, user);
         userService.addUserToDatabase(database, user2);
         userService.addUserToDatabase(database, user3);
@@ -205,6 +215,41 @@ public class ReservationServiceTest {
         assertEquals(identificator, database.getReservations().get(1).getIdentificator());
     }
 
+    @Test
+    @DisplayName("adding reservation to database" +
+            "(throws DateTimeException because of minutes in start date with empty reservation list)")
+    public void addReservationToDatabase11Test() {
+        reservation.setEndDate(new DateTime(2020, 1, 1, 11, 11));
+
+        assertThrows(DateTimeException.class,
+                () -> reservationService.addReservationToDatabase(database, reservation));
+    }
+
+    @Test
+    @DisplayName("adding reservation to database" +
+            "(throws DateTimeException because of minutes in start date with non-empty reservation list)")
+    public void addReservationToDatabase12Test() {
+        reservation.setEndDate(new DateTime(2020, 1, 1, 11, 11));
+
+        reservationService.addReservationToDatabase(database, reservation3);
+        assertThrows(DateTimeException.class,
+                () -> reservationService.addReservationToDatabase(database, reservation));
+    }
+
+    @Test
+    @DisplayName("adding reservation to database" +
+            "(throws DateTimeException because date of reservation is contained in other's date " +
+            "of reservation with non-empty reservation list)")
+    public void addReservationToDatabase13Test() {
+        reservation2.setStartDate(new DateTime(2019, 4, 4, 10, 0));
+        reservation2.setEndDate(new DateTime(2019, 4, 4, 11, 0));
+        reservation3.setStartDate(new DateTime(2019, 4, 4, 9, 0));
+        reservation3.setEndDate(new DateTime(2019, 4, 5, 9, 0));
+
+        reservationService.addReservationToDatabase(database, reservation3);
+        assertThrows(DateTimeException.class,
+                () -> reservationService.addReservationToDatabase(database, reservation2));
+    }
 
     @Test
     @DisplayName("getting reservations of specific user when hashmap of user's revervations is not empty")
@@ -256,10 +301,13 @@ public class ReservationServiceTest {
         roomService = null;
         reservation = null;
         reservation2 = null;
+        reservation3 = null;
         room = null;
+        room2 = null;
         user = null;
         user2 = null;
         user3 = null;
         hotel = null;
+        hotel2 = null;
     }
 }

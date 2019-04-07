@@ -1,7 +1,10 @@
 package utils;
 
+import models.Hotel;
 import models.Reservation;
+import models.Room;
 import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -115,9 +118,76 @@ public class ReservationUtilsTest {
     }
 
     @Test
+    @DisplayName("checks if given room from 1st reservation is in the same hotel " +
+            "as room drom 2nd reservation and returns true")
+    public void ifRoomIsInTheSameHotelTest() {
+        Hotel hotel = new Hotel("Example name", new LocalTime(8), new LocalTime(22));
+        hotel.setId(1);
+        Room room1 = new Room(hotel, 2, 2);
+        room1.setId(1);
+
+        r1 = new Reservation(
+                new DateTime(2019, 4, 10, 10, 0),
+                new DateTime(2019, 4, 11, 10, 0),
+                null, room1);
+        r2 = new Reservation(
+                new DateTime(2019, 4, 10, 10, 0),
+                new DateTime(2019, 4, 11, 11, 0),
+                null, room1);
+
+        assertTrue(ReservationUtils.ifRoomIsInTheSameHotel(r1, r2));
+    }
+
+    @Test
+    @DisplayName("checks if given room from 1st reservation is in the same hotel " +
+            "as room from 2nd reservation and returns false")
+    public void ifRoomIsInTheSameHotel2Test() {
+        Hotel hotel = new Hotel("Example name", new LocalTime(8), new LocalTime(22));
+        Room room1 = new Room(hotel, 2, 2);
+        Room room2 = new Room(hotel, 3, 2);
+        hotel.setId(1);
+        room1.setId(1);
+        room2.setId(2);
+        r1 = new Reservation(
+                new DateTime(2019, 4, 10, 10, 0),
+                new DateTime(2019, 4, 11, 10, 0),
+                null, room1);
+        r2 = new Reservation(
+                new DateTime(2019, 4, 10, 10, 0),
+                new DateTime(2019, 4, 11, 11, 0),
+                null, room2);
+
+        assertFalse(ReservationUtils.ifRoomIsInTheSameHotel(r1, r2));
+    }
+
+    @Test
+    @DisplayName("checks if given room from 1st reservation is in the same hotel " +
+            "as room from 2nd reservation and returns false")
+    public void ifRoomIsInTheSameHotel3Test() {
+        Hotel hotel1 = new Hotel("Example name", new LocalTime(8), new LocalTime(22));
+        Hotel hotel2 = new Hotel("Example name 2", new LocalTime(8), new LocalTime(22));
+        Room room1 = new Room(hotel1, 2, 2);
+        Room room2 = new Room(hotel2, 3, 2);
+        hotel1.setId(1);
+        hotel2.setId(2);
+        room1.setId(1);
+        room2.setId(2);
+        r1 = new Reservation(
+                new DateTime(2019, 4, 10, 10, 0),
+                new DateTime(2019, 4, 11, 10, 0),
+                null, room1);
+        r2 = new Reservation(
+                new DateTime(2019, 4, 10, 10, 0),
+                new DateTime(2019, 4, 11, 11, 0),
+                null, room2);
+
+        assertFalse(ReservationUtils.ifRoomIsInTheSameHotel(r1, r2));
+    }
+
+    @Test
     @DisplayName("checks if date of first reservation has a product of sets with " +
             "date of second reservation and returns true")
-    public void hasAProductOfSetsTest() {
+    public void ifDatesHaveAnIntersectTest() {
         r1 = new Reservation(
                 new DateTime(2019, 4, 10, 10, 0),
                 new DateTime(2019, 4, 15, 10, 0),
@@ -133,7 +203,7 @@ public class ReservationUtilsTest {
     @Test
     @DisplayName("checks if date of first reservation has a product of sets with " +
             "date of second reservation and returns true")
-    public void hasAProductOfSets2Test() {
+    public void ifDatesHaveAnIntersect2Test() {
         r1 = new Reservation(
                 new DateTime(2019, 4, 10, 10, 0),
                 new DateTime(2019, 4, 15, 10, 0),
