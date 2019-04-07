@@ -37,4 +37,18 @@ public class DatabaseService {
             return mostCrowdedDayOfTheWeek;
         } else throw new NullPointerException();
     }
+
+    public HashMap<String, Integer> generateStatictics(Database database) {
+        if(database != null) {
+            HashMap<String, Integer> statistics = new HashMap<>();
+
+            statistics.put("Hotels in database", database.getHotels().size());
+            statistics.put("Reservations in database", database.getReservations().size());
+            statistics.put("Rooms in database", database.getRooms().size());
+            statistics.put("Users in database", database.getUsers().size());
+            statistics.put("The most crowded day of the week", theMostCrowdedDayOfTheWeek(database));
+
+            return statistics;
+        } else throw new NullPointerException();
+    }
 }
