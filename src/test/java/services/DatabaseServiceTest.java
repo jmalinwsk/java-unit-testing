@@ -8,6 +8,8 @@ import models.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import java.util.HashMap;
 
@@ -84,18 +86,13 @@ public class DatabaseServiceTest {
         assertEquals(0, databaseService.theMostCrowdedDayOfTheWeek(emptyDatabase));
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvFileSource(resources = "/data.csv")
     @DisplayName("generating statistics (valid)")
-    public void generateStatisticsTest() {
+    public void generateStatisticsTest(int value, String string) {
         HashMap<String, Integer> statistics = databaseService.generateStatistics(database);
 
-        assertAll(
-                () -> assertEquals(1, statistics.get("Hotels in database")),
-                () -> assertEquals(3, statistics.get("Reservations in database")),
-                () -> assertEquals(1, statistics.get("Rooms in database")),
-                () -> assertEquals(3, statistics.get("Users in database")),
-                () -> assertEquals(3, statistics.get("The most crowded day of the week"))
-        );
+        assertEquals(value, statistics.get(string));
     }
 
     @Test
