@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.DateTimeException;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -115,7 +116,7 @@ public class ReservationServiceTest {
     @Test
     @DisplayName("adding reservation to database " +
             "(throws NullPointerException when database is null")
-    public void addRoomToDatabase2Test() {
+    public void addReservationToDatabase2Test() {
         assertThrows(NullPointerException.class,
                 () -> reservationService.addReservationToDatabase(null, reservation));
     }
@@ -123,7 +124,7 @@ public class ReservationServiceTest {
     @Test
     @DisplayName("adding reservation to database " +
             "(throws IllegalArgumentException when reservation is null")
-    public void addRoomToDatabase3Test() {
+    public void addReservationToDatabase3Test() {
         assertThrows(IllegalArgumentException.class,
                 () -> reservationService.addReservationToDatabase(database, null));
     }
@@ -131,7 +132,7 @@ public class ReservationServiceTest {
     @Test
     @DisplayName("adding reservation to database " +
             "(throws IllegalArgumentException when database and reservation are null")
-    public void addRoomToDatabase4Test() {
+    public void addReservationToDatabase4Test() {
         assertThrows(IllegalArgumentException.class,
                 () -> reservationService.addReservationToDatabase(null, null));
     }
@@ -139,7 +140,7 @@ public class ReservationServiceTest {
     @Test
     @DisplayName("adding reservation to database" +
             "(throws IllegalArgumentException when reservation doesn't pass validation")
-    public void addRoomToDatabase5Test() {
+    public void addReservationToDatabase5Test() {
         reservation.setEndDate(null);
         assertThrows(IllegalArgumentException.class,
                 () -> reservationService.addReservationToDatabase(database, reservation));
@@ -148,7 +149,7 @@ public class ReservationServiceTest {
     @Test
     @DisplayName("adding reservation to database" +
             "(throws NullPointerException when room doesn't exist in database")
-    public void addRoomToDatabase6Test() {
+    public void addReservationToDatabase6Test() {
         reservation.setRoom(new Room(hotel, 666, 1));
         assertThrows(NullPointerException.class,
                 () -> reservationService.addReservationToDatabase(database, reservation));
@@ -157,10 +158,41 @@ public class ReservationServiceTest {
     @Test
     @DisplayName("adding reservation to database" +
             "(throws NullPointerException when user doesn't exist in database")
-    public void addRoomToDatabase7Test() {
+    public void addReservationToDatabase7Test() {
         reservation.setUser(new User("example@example.pl"));
         assertThrows(NullPointerException.class,
                 () -> reservationService.addReservationToDatabase(database, reservation));
+    }
+
+    @Test
+    @DisplayName("adding reservation to database " +
+            "(throws DateTimeException because selected (exactly the same) date is reserved by other person)")
+    public void addReservationToDatabase8Test() {
+        reservationService.addReservationToDatabase(database, reservation);
+        reservationService.addReservationToDatabase(database, reservation2);
+        Reservation newReservation = new Reservation(
+                new DateTime(2019, 5, 5, 11, 0),
+                new DateTime(2019, 5, 6, 11, 0),
+                user3, room);
+
+        assertThrows(DateTimeException.class,
+                () -> reservationService.addReservationToDatabase(database, newReservation));
+    }
+
+    @Test
+    @DisplayName("adding reservation to database " +
+            "(throws DateTimeException because selected date (that cover's other date) " +
+            "is reserved by other person)")
+    public void addReservationToDatabase9Test() {
+        reservationService.addReservationToDatabase(database, reservation);
+        reservationService.addReservationToDatabase(database, reservation2);
+        Reservation newReservation = new Reservation(
+                new DateTime(2019, 5, 6, 10, 0),
+                new DateTime(2019, 5, 7, 10, 0),
+                user3, room);
+
+        assertThrows(DateTimeException.class,
+                () -> reservationService.addReservationToDatabase(database, newReservation));
     }
 
 
